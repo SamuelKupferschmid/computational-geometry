@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Light", "Light\Light.csproj", "{D0F067CA-D840-4865-B943-0CC918418E31}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geometry2D", "Geometry2D\Geometry2D.csproj", "{DCBFC326-4C54-448C-A59C-4A7B3F6A2021}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Visualization2D", "Visualization2D\Visualization2D.csproj", "{3E0A6300-A4D7-4D02-92C1-54E16FDE77CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D0F067CA-D840-4865-B943-0CC918418E31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0F067CA-D840-4865-B943-0CC918418E31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0F067CA-D840-4865-B943-0CC918418E31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0F067CA-D840-4865-B943-0CC918418E31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCBFC326-4C54-448C-A59C-4A7B3F6A2021}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCBFC326-4C54-448C-A59C-4A7B3F6A2021}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCBFC326-4C54-448C-A59C-4A7B3F6A2021}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCBFC326-4C54-448C-A59C-4A7B3F6A2021}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E0A6300-A4D7-4D02-92C1-54E16FDE77CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E0A6300-A4D7-4D02-92C1-54E16FDE77CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E0A6300-A4D7-4D02-92C1-54E16FDE77CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E0A6300-A4D7-4D02-92C1-54E16FDE77CE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
