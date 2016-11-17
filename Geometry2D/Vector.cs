@@ -26,11 +26,13 @@ namespace Geometry2D
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        public double MhDist => Math.Abs(X) + Math.Abs(Y);
+        public double MhnDist => Math.Abs(X) + Math.Abs(Y);
 
-        public bool IsMultiple(Vector v) => v == this || (this.X/v.X) - (this.Y/v.Y) < double.Epsilon;
+        public bool IsMultiple(Vector v) => v == this || (X/v.X) - (Y/v.Y) < double.Epsilon;
 
         public static Vector operator +(Vector v1, Vector v2) => new Vector(v1.X + v2.X, v1.Y + v2.Y);
+
+        public static Vector operator *(Vector v, double factor) => new Vector(v.X * factor, v.Y * factor);
 
         public static Vector operator -(Vector v1, Vector v2) => new Vector(v1.X - v2.X, v1.Y - v2.Y);
 

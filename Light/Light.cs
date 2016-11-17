@@ -21,14 +21,20 @@ namespace Light
             using (var outp = new StreamWriter("light.out"))
             {
                 var drawing = new Drawing();
-                var n=int.Parse(Next());
-                var vector = new Vector[n];
-
+                var n = int.Parse(Next());
+                var vectors = new Vector[n];
+                var move = new Vector(0,-1);
                 for (var i = 0; i < n; i++)
                 {
                     var v = new Vector(double.Parse(Next()), double.Parse(Next()));
-                    vector[i] = v;
-                    drawing.Add(v);
+                    vectors[i] = v;
+
+                    if (i > 0)
+                    {
+                        var s = new Segment(vectors[i - 1], vectors[i]);
+                        drawing.Add(s);
+                        drawing.Add(s + move);
+                    }
                 }
                 //outp.Write("solution");
 
@@ -38,6 +44,6 @@ namespace Light
             }
         }
 
-        
+
     }
 }

@@ -18,5 +18,18 @@ namespace Geometry2D
         }
 
         public bool IsParallel(Line line) => Direction.IsMultiple(line.Direction);
+
+        public static bool operator ==(Line l1, Line l2)
+        {
+            if (!l1.Direction.IsMultiple(l2.Direction))
+                return false;
+
+            var mx = (l2.Direction.X - l1.Support.X)/l1.Direction.X;
+            var my = (l2.Direction.Y - l1.Support.Y)/l1.Direction.Y;
+
+            return mx - my < double.Epsilon;
+        }
+
+        public static bool operator !=(Line l1, Line l2) => !(l1 == l2);
     }
 }

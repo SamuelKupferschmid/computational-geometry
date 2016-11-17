@@ -7,7 +7,7 @@ namespace Geometry2DTests
     public class VectorTests
     {
         [TestMethod]
-        public void MhDistTest() => Assert.AreEqual(8,new Vector(3,-5).MhDist);
+        public void MhDistTest() => Assert.AreEqual(8,new Vector(3,-5).MhnDist);
 
         [TestMethod]
         public void AddOperatorUsesOffset() => Assert.AreEqual(new Vector(6, 3), new Vector(2, 4) + new Vector(4, -1));

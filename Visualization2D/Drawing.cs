@@ -15,21 +15,18 @@ namespace Visualization2D
     {
         public Drawing()
         {
-            ViewPoint = Vector.Null;
+            ViewSize = default(Segment);
             AutoView = true;
         }
 
         private readonly List<IGeometricElement> _elements = new List<IGeometricElement>();
 
         private const double MarginFactor = 0.2;
-        private const double MarginFallback = 10;
 
         [Browsable(true)]
         public IEnumerable<IGeometricElement> Elements => _elements;
 
-        public Vector ViewPoint { get; set; }
-        public double ViewWidth { get; set; }
-        public double ViewHeight { get; set; }
+        public Segment ViewSize { get; set; }
 
         /// <summary>
         /// if true ViewPoint, ViewWidth, ViewHeight will be set automatically according the elements
@@ -63,27 +60,52 @@ namespace Visualization2D
             return _elements.GetEnumerator();
         }
 
-        public Image DrawImage(int width, int height)
+        /// <summary>
+        /// Draws an Image which fits into the given width and height keeping the Drawings ratio
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <returns></returns>
+        public Image DrawImage(double width, double height)
         {
-            var img = new Bitmap(width, height);
+            var cRatio = width / height;
+            var dRation = ViewSize.X / ViewSize.Y;
+
+            var f = cRatio > dRation ? height/ViewSize.Y : width/ViewSize.X;
+            var size = (ViewSize.End - ViewSize.Start) * f;
+
+            var img = new Bitmap((int)size.X, (int)size.Y);
 
             using (var g = Graphics.FromImage(img))
             {
+                g.FillRegion(Brushes.WhiteSmoke,g.Clip);
                 foreach (var el in this)
                 {
                     if (el is Vector)
-                        DrawVector(g, (Vector)el);
+                        DrawVector(g, (Vector)el, Vector.Null, 50);
                     else if (el is Segment)
-                        DrawSegment(g, (Segment)el);
+                        DrawSegment(g, (Segment)el, Vector.Null, 50);
                     else
                         throw new NotImplementedException();
-
-
                 }
             }
 
             return img;
         }
+
+        private void DrawVector(Graphics g, Vector v, Vector offset, double factor)
+        {
+            v = calcImageVector(v, offset, factor);
+            g.FillEllipse(Brushes.Black, (float)v.X, g.VisibleClipBounds.Height - (float)v.Y, 2, 2);
+        }
+
+        private void DrawSegment(Graphics g, Segment s, Vector offset, double factor)
+        {
+            s = new Segment(calcImageVector(s.Start, offset, factor), calcImageVector(s.End, offset, factor));
+            g.DrawLine(Pens.Black, (float)s.X1, g.VisibleClipBounds.Height - (float)s.Y1, (float)s.X2, g.VisibleClipBounds.Height - (float)s.Y2);
+        }
+
+        private Vector calcImageVector(Vector v, Vector offset, double factor) => (v - offset) * factor;
 
         private void CalcView()
         {
@@ -92,45 +114,34 @@ namespace Visualization2D
             var maxX = double.MinValue;
             var maxY = double.MinValue;
 
+            Action<Vector> adjustFrame = (Vector v) =>
+            {
+                minX = Math.Min(minX, v.X);
+                minY = Math.Min(minY, v.Y);
+                maxX = Math.Max(maxX, v.X);
+                maxY = Math.Max(maxY, v.Y);
+            };
+
             foreach (var el in _elements)
             {
                 if (el is Vector)
                 {
-                    minX = Math.Min(minX, ((Vector)el).X);
-                    minY = Math.Min(minY, ((Vector)el).Y);
-
-                    maxX = Math.Max(maxX, ((Vector)el).X);
-                    maxY = Math.Max(maxY, ((Vector)el).Y);
+                    adjustFrame((Vector)el);
+                }
+                else if (el is Segment)
+                {
+                    adjustFrame(((Segment)el).Start);
+                    adjustFrame(((Segment)el).End);
                 }
             }
 
-            ViewPoint = new Vector((maxX - minX) / 2, (maxY - minY) / 2);
+            var marginX = (maxX - minX) * MarginFactor / 2;
+            var marginY = (maxY - minY) * MarginFactor / 2;
 
-            ViewWidth = minX == maxX ? MarginFallback : (maxX - minX) * (MarginFactor + 1);
-            ViewHeight = minY == maxY ? MarginFallback : (maxY - minY) * (MarginFactor + 1);
-        }
+            var start = new Vector(minX - marginX, minY - marginY);
+            var end = new Vector(maxX + marginX, maxY + marginY);
 
-        private Vector calcViewPos(Vector p, Graphics g)
-        {
-            var viewOffset = ViewPoint - new Vector(ViewWidth/2, ViewHeight/2);
-            var relPos = p - viewOffset;
-
-            var xFact = g.VisibleClipBounds.Width/ViewWidth;
-            var yFact = g.VisibleClipBounds.Height/ViewHeight;
-
-            return new Vector(relPos.X*xFact, relPos.Y*yFact);
-        }
-
-        private void DrawVector(Graphics g, Vector v)
-        {
-            v = calcViewPos(v,g);
-            g.FillEllipse(Brushes.Black, (float)v.X, (float)v.Y, 2, 2);
-        }
-
-        private void DrawSegment(Graphics g, Segment s)
-        {
-            s = new Segment(calcViewPos(s.Start,g), calcViewPos(s.End,g));
-            g.DrawLine(Pens.Black, (float)s.X1, (float)s.Y1, (float)s.X2, (float)s.Y2);
+            ViewSize = new Segment(start, end - start);
         }
 
     }
