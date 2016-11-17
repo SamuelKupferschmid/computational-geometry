@@ -8,8 +8,8 @@ namespace Geometry2D
 {
     public struct Vector: IGeometricElement
     {
-        public double X { get; private set; }
-        public double Y { get; private set; }
+        public readonly double X;
+        public readonly double Y;
 
         public Vector(double x, double y)
         {
@@ -28,8 +28,33 @@ namespace Geometry2D
         /// <returns></returns>
         public double MhDist => Math.Abs(X) + Math.Abs(Y);
 
+        public bool IsMultiple(Vector v) => v == this || (this.X/v.X) - (this.Y/v.Y) < double.Epsilon;
+
         public static Vector operator +(Vector v1, Vector v2) => new Vector(v1.X + v2.X, v1.Y + v2.Y);
 
         public static Vector operator -(Vector v1, Vector v2) => new Vector(v1.X - v2.X, v1.Y - v2.Y);
+
+        public static bool operator ==(Vector v1, Vector v2) => v1.X - v2.X < double.Epsilon && v1.Y - v2.Y < double.Epsilon;
+        public static bool operator !=(Vector v1, Vector v2) => v1.X - v2.X > double.Epsilon || v1.Y - v2.Y > double.Epsilon;
+
+
+        public bool Equals(Vector other)
+        {
+            return X.Equals(other.X) && Y.Equals(other.Y);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            return obj is Vector && Equals((Vector)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (X.GetHashCode() * 397) ^ Y.GetHashCode();
+            }
+        }
     }
 }

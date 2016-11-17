@@ -14,5 +14,11 @@ namespace Geometry2DTests
 
         [TestMethod]
         public void SubtractOperatorUsesOffset() => Assert.AreEqual(new Vector(6, 3), new Vector(9, 8) - new Vector(3, 5));
+
+        [TestMethod]
+        public void MultipleIsTrue() => Assert.IsTrue(new Vector(4, 6).IsMultiple(new Vector(2, 3)));
+
+        [TestMethod]
+        public void MultipleNullIsTrue() => Assert.IsTrue(new Vector(0, 0).IsMultiple(new Vector(0, 0)));
     }
 }
