@@ -8,20 +8,18 @@ namespace Geometry2D
 {
     public struct Segment : IGeometricElement
     {
-        public double X1 { get; private set; }
-        public double Y1 { get; private set; }
-        public double X2 { get; private set; }
-        public double Y2 { get; private set; }
+        public double X1 => Start.X;
+        public double Y1 => Start.Y;
+        public double X2 => End.X;
+        public double Y2 => End.Y;
 
-        public Point Start => new Point(X1,Y1);
-        public Point End => new Point(X2,Y2);
+        public Vector Start { get; set; }
+        public Vector End { get; set; }
 
-        public Segment(Point start, Point end)
+        public Segment(Vector start, Vector end)
         {
-            X1 = start.X;
-            Y1 = start.Y;
-            X2 = end.X;
-            Y2 = end.Y;
+            Start = start;
+            End = end;
         }
     }
 }

@@ -42,7 +42,6 @@
   <ItemGroup>
     <Compile Include="IGeometricElement.cs" />
     <Compile Include="Line.cs" />
-    <Compile Include="Point.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Segment.cs" />
     <Compile Include="Vector.cs" />

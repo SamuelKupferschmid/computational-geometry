@@ -22,13 +22,13 @@ namespace Light
             {
                 var drawing = new Drawing();
                 var n=int.Parse(Next());
-                var points = new Point[n];
+                var vector = new Vector[n];
 
                 for (var i = 0; i < n; i++)
                 {
-                    var p = new Point(double.Parse(Next()), double.Parse(Next()));
-                    points[i] = p;
-                    drawing.Add(p);
+                    var v = new Vector(double.Parse(Next()), double.Parse(Next()));
+                    vector[i] = v;
+                    drawing.Add(v);
                 }
                 //outp.Write("solution");
 

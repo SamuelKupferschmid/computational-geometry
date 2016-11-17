@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Geometry2D;
-using Point = Geometry2D.Point;
 
 namespace Visualization2D
 {
@@ -16,7 +15,7 @@ namespace Visualization2D
     {
         public Drawing()
         {
-            ViewPoint = new Point();
+            ViewPoint = Vector.Null;
             AutoView = true;
         }
 
@@ -28,7 +27,7 @@ namespace Visualization2D
         [Browsable(true)]
         public IEnumerable<IGeometricElement> Elements => _elements;
 
-        public Point ViewPoint { get; set; }
+        public Vector ViewPoint { get; set; }
         public double ViewWidth { get; set; }
         public double ViewHeight { get; set; }
 
@@ -40,7 +39,7 @@ namespace Visualization2D
             where T : struct, IGeometricElement
         {
             _elements.Add(element);
-            calcView();
+            CalcView();
         }
 
         [STAThread]
@@ -72,10 +71,10 @@ namespace Visualization2D
             {
                 foreach (var el in this)
                 {
-                    if (el is Point)
-                        drawPoint(g, (Point)el);
+                    if (el is Vector)
+                        DrawVector(g, (Vector)el);
                     else if (el is Segment)
-                        drawSegment(g, (Segment)el);
+                        DrawSegment(g, (Segment)el);
                     else
                         throw new NotImplementedException();
 
@@ -86,7 +85,7 @@ namespace Visualization2D
             return img;
         }
 
-        private void calcView()
+        private void CalcView()
         {
             var minX = double.MaxValue;
             var minY = double.MaxValue;
@@ -95,40 +94,40 @@ namespace Visualization2D
 
             foreach (var el in _elements)
             {
-                if (el is Point)
+                if (el is Vector)
                 {
-                    minX = Math.Min(minX, ((Point)el).X);
-                    minY = Math.Min(minY, ((Point)el).Y);
+                    minX = Math.Min(minX, ((Vector)el).X);
+                    minY = Math.Min(minY, ((Vector)el).Y);
 
-                    maxX = Math.Max(maxX, ((Point)el).X);
-                    maxY = Math.Max(maxY, ((Point)el).Y);
+                    maxX = Math.Max(maxX, ((Vector)el).X);
+                    maxY = Math.Max(maxY, ((Vector)el).Y);
                 }
             }
 
-            ViewPoint = new Point((maxX - minX) / 2, (maxY - minY) / 2);
+            ViewPoint = new Vector((maxX - minX) / 2, (maxY - minY) / 2);
 
             ViewWidth = minX == maxX ? MarginFallback : (maxX - minX) * (MarginFactor + 1);
             ViewHeight = minY == maxY ? MarginFallback : (maxY - minY) * (MarginFactor + 1);
         }
 
-        private Point calcViewPos(Point p, Graphics g)
+        private Vector calcViewPos(Vector p, Graphics g)
         {
-            var viewOffset = ViewPoint - new Point(ViewWidth/2, ViewHeight/2);
+            var viewOffset = ViewPoint - new Vector(ViewWidth/2, ViewHeight/2);
             var relPos = p - viewOffset;
 
             var xFact = g.VisibleClipBounds.Width/ViewWidth;
             var yFact = g.VisibleClipBounds.Height/ViewHeight;
 
-            return new Point(relPos.X*xFact, relPos.Y*yFact);
+            return new Vector(relPos.X*xFact, relPos.Y*yFact);
         }
 
-        private void drawPoint(Graphics g, Point p)
+        private void DrawVector(Graphics g, Vector v)
         {
-            p = calcViewPos(p,g);
-            g.FillEllipse(Brushes.Black, (float)p.X, (float)p.Y, 2, 2);
+            v = calcViewPos(v,g);
+            g.FillEllipse(Brushes.Black, (float)v.X, (float)v.Y, 2, 2);
         }
 
-        private void drawSegment(Graphics g, Segment s)
+        private void DrawSegment(Graphics g, Segment s)
         {
             s = new Segment(calcViewPos(s.Start,g), calcViewPos(s.End,g));
             g.DrawLine(Pens.Black, (float)s.X1, (float)s.Y1, (float)s.X2, (float)s.Y2);
