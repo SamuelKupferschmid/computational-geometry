@@ -113,18 +113,24 @@ namespace Visualization2D
 
         private Point calcViewPos(Point p, Graphics g)
         {
-            return p;
+            var viewOffset = ViewPoint - new Point(ViewWidth/2, ViewHeight/2);
+            var relPos = p - viewOffset;
+
+            var xFact = g.VisibleClipBounds.Width/ViewWidth;
+            var yFact = g.VisibleClipBounds.Height/ViewHeight;
+
+            return new Point(relPos.X*xFact, relPos.Y*yFact);
         }
 
         private void drawPoint(Graphics g, Point p)
         {
-            p = calcViewPos(p);
+            p = calcViewPos(p,g);
             g.FillEllipse(Brushes.Black, (float)p.X, (float)p.Y, 2, 2);
         }
 
         private void drawSegment(Graphics g, Segment s)
         {
-            s = new Segment(calcViewPos(s.Start), calcViewPos(s.End));
+            s = new Segment(calcViewPos(s.Start,g), calcViewPos(s.End,g));
             g.DrawLine(Pens.Black, (float)s.X1, (float)s.Y1, (float)s.X2, (float)s.Y2);
         }
 
