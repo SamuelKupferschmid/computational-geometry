@@ -16,5 +16,7 @@ namespace Geometry2D
             X = x;
             Y = y;
         }
+
+        public double Length => Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y,2));
     }
 }
