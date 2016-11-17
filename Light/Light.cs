@@ -27,7 +27,7 @@ namespace Light
                 var drawing = new Drawing
                 {
                     new Point(3, 5),
-                    new Point(99, 5)
+                    new Segment(new Point(3,60),new Point(500,6))
                 };
 
 

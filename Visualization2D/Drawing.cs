@@ -16,7 +16,7 @@ namespace Visualization2D
     {
         public Drawing()
         {
-            ViewPoint = new Point();   
+            ViewPoint = new Point();
         }
 
         private readonly List<IGeometricElement> _elements = new List<IGeometricElement>();
@@ -63,8 +63,10 @@ namespace Visualization2D
             {
                 foreach (var el in this)
                 {
-                    if(el is Point)
-                        drawPoint(g,(Point)el);
+                    if (el is Point)
+                        drawPoint(g, (Point)el);
+                    else if (el is Segment)
+                        drawSegment(g, (Segment)el);
                     else
                         throw new NotImplementedException();
 
@@ -77,7 +79,12 @@ namespace Visualization2D
 
         private void drawPoint(Graphics g, Point p)
         {
-            g.FillEllipse(Brushes.Black, (float)p.X,(float)p.Y,2,2);
+            g.FillEllipse(Brushes.Black, (float)p.X, (float)p.Y, 2, 2);
+        }
+
+        private void drawSegment(Graphics g, Segment s)
+        {
+            g.DrawLine(Pens.Black, (float)s.X1, (float)s.Y1, (float)s.X2, (float)s.Y2);
         }
 
     }
