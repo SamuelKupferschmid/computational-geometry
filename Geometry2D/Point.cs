@@ -16,5 +16,12 @@ namespace Geometry2D
             X = x;
             Y = y;
         }
+
+        /// <summary>
+        /// Gets the manhattan distance to the 0-Point
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        public double MhDist => Math.Abs(X) + Math.Abs(Y);
     }
 }

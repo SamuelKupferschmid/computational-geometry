@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geometry2D", "Geometry2D\Ge
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Visualization2D", "Visualization2D\Visualization2D.csproj", "{3E0A6300-A4D7-4D02-92C1-54E16FDE77CE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geometry2DTests", "Geometry2DTests\Geometry2DTests.csproj", "{1687910B-51FB-409B-A294-2485E2174716}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{3E0A6300-A4D7-4D02-92C1-54E16FDE77CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E0A6300-A4D7-4D02-92C1-54E16FDE77CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E0A6300-A4D7-4D02-92C1-54E16FDE77CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1687910B-51FB-409B-A294-2485E2174716}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1687910B-51FB-409B-A294-2485E2174716}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1687910B-51FB-409B-A294-2485E2174716}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1687910B-51FB-409B-A294-2485E2174716}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
