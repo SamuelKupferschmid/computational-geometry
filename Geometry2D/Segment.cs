@@ -13,6 +13,9 @@ namespace Geometry2D
         public double X2 { get; private set; }
         public double Y2 { get; private set; }
 
+        public Point Start => new Point(X1,Y1);
+        public Point End => new Point(X2,Y2);
+
         public Segment(Point start, Point end)
         {
             X1 = start.X;

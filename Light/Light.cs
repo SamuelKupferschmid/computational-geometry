@@ -20,15 +20,17 @@ namespace Light
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             using (var outp = new StreamWriter("light.out"))
             {
-                //your code here
-                //var a=int.Parse(Next());
-                //outp.Write("solution");
+                var drawing = new Drawing();
+                var n=int.Parse(Next());
+                var points = new Point[n];
 
-                var drawing = new Drawing
+                for (var i = 0; i < n; i++)
                 {
-                    new Point(3, 5),
-                    new Segment(new Point(3,60),new Point(500,6))
-                };
+                    var p = new Point(double.Parse(Next()), double.Parse(Next()));
+                    points[i] = p;
+                    drawing.Add(p);
+                }
+                //outp.Write("solution");
 
 
 

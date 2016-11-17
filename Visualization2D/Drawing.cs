@@ -17,9 +17,13 @@ namespace Visualization2D
         public Drawing()
         {
             ViewPoint = new Point();
+            AutoView = true;
         }
 
         private readonly List<IGeometricElement> _elements = new List<IGeometricElement>();
+
+        private const double MarginFactor = 0.2;
+        private const double MarginFallback = 10;
 
         [Browsable(true)]
         public IEnumerable<IGeometricElement> Elements => _elements;
@@ -28,10 +32,15 @@ namespace Visualization2D
         public double ViewWidth { get; set; }
         public double ViewHeight { get; set; }
 
+        /// <summary>
+        /// if true ViewPoint, ViewWidth, ViewHeight will be set automatically according the elements
+        /// </summary>
+        public bool AutoView { get; set; }
         public void Add<T>(T element)
             where T : struct, IGeometricElement
         {
             _elements.Add(element);
+            calcView();
         }
 
         [STAThread]
@@ -77,13 +86,45 @@ namespace Visualization2D
             return img;
         }
 
+        private void calcView()
+        {
+            var minX = double.MaxValue;
+            var minY = double.MaxValue;
+            var maxX = double.MinValue;
+            var maxY = double.MinValue;
+
+            foreach (var el in _elements)
+            {
+                if (el is Point)
+                {
+                    minX = Math.Min(minX, ((Point)el).X);
+                    minY = Math.Min(minY, ((Point)el).Y);
+
+                    maxX = Math.Max(maxX, ((Point)el).X);
+                    maxY = Math.Max(maxY, ((Point)el).Y);
+                }
+            }
+
+            ViewPoint = new Point((maxX - minX) / 2, (maxY - minY) / 2);
+
+            ViewWidth = minX == maxX ? MarginFallback : (maxX - minX) * (MarginFactor + 1);
+            ViewHeight = minY == maxY ? MarginFallback : (maxY - minY) * (MarginFactor + 1);
+        }
+
+        private Point calcViewPos(Point p, Graphics g)
+        {
+            return p;
+        }
+
         private void drawPoint(Graphics g, Point p)
         {
+            p = calcViewPos(p);
             g.FillEllipse(Brushes.Black, (float)p.X, (float)p.Y, 2, 2);
         }
 
         private void drawSegment(Graphics g, Segment s)
         {
+            s = new Segment(calcViewPos(s.Start), calcViewPos(s.End));
             g.DrawLine(Pens.Black, (float)s.X1, (float)s.Y1, (float)s.X2, (float)s.Y2);
         }
 
