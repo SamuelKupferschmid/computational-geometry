@@ -26,5 +26,9 @@ namespace Geometry2DTests
 
             Assert.AreEqual(new Vector(1,1),v);
         }
+
+        [TestMethod]
+        public void IsOnLineSimple()
+            => Assert.IsTrue(new Line(Vector.Null, new Vector(4, 2)).IsOnLine(new Vector(6, 3)));
     }
 }

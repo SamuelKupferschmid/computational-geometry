@@ -29,6 +29,15 @@ namespace Geometry2D
             return false;
         }
 
+        public bool IsOnLine(Vector v)
+        {
+            var relV = v - Support;
+            var mx = relV.X/Direction.X;
+            var my = relV.Y/Direction.Y;
+
+            return mx - my < double.Epsilon;
+        }
+
         public static bool operator ==(Line l1, Line l2)
         {
             if (!l1.Direction.IsMultiple(l2.Direction))
