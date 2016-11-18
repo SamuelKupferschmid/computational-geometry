@@ -19,7 +19,7 @@ namespace Geometry2D
 
         public static Vector Null = new Vector(0, 0);
 
-        public double Length => Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2));
+        public double Length => Math.Sqrt(LengthSquared);
 
         public double LengthSquared => Math.Pow(X, 2) + Math.Pow(Y, 2);
 
@@ -29,7 +29,7 @@ namespace Geometry2D
         /// <returns></returns>
         public double MhnDist => Math.Abs(X) + Math.Abs(Y);
 
-        public bool IsMultiple(Vector v) => v == this || (X / v.X) - (Y / v.Y) < double.Epsilon;
+        public bool IsMultiple(Vector v) => v == this || (v.X != 0 & v.Y != 0 && (X / v.X) - (Y / v.Y) < double.Epsilon);
 
         public static Vector operator +(Vector v1, Vector v2) => new Vector(v1.X + v2.X, v1.Y + v2.Y);
 
@@ -38,8 +38,8 @@ namespace Geometry2D
 
         public static Vector operator -(Vector v1, Vector v2) => new Vector(v1.X - v2.X, v1.Y - v2.Y);
 
-        public static bool operator ==(Vector v1, Vector v2) => v1.X - v2.X < double.Epsilon && v1.Y - v2.Y < double.Epsilon;
-        public static bool operator !=(Vector v1, Vector v2) => v1.X - v2.X > double.Epsilon || v1.Y - v2.Y > double.Epsilon;
+        public static bool operator ==(Vector v1, Vector v2) => Math.Abs(v1.X - v2.X) < double.Epsilon && Math.Abs(v1.Y - v2.Y) < double.Epsilon;
+        public static bool operator !=(Vector v1, Vector v2) => Math.Abs(v1.X - v2.X) > double.Epsilon || Math.Abs(v1.Y - v2.Y) > double.Epsilon;
 
 
         public bool Equals(Vector other)

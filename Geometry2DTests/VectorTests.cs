@@ -19,6 +19,9 @@ namespace Geometry2DTests
         public void MultipleIsTrue() => Assert.IsTrue(new Vector(4, 6).IsMultiple(new Vector(2, 3)));
 
         [TestMethod]
+        public void MultipleWithZero() => Assert.IsFalse(new Vector(5, 1).IsMultiple(new Vector(0, -1)));
+
+        [TestMethod]
         public void MultipleNullIsTrue() => Assert.IsTrue(new Vector(0, 0).IsMultiple(new Vector(0, 0)));
 
         [TestMethod]

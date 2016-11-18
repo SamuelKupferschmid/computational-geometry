@@ -25,7 +25,6 @@ namespace Geometry2D
             End = end;
         }
 
-
         public bool IsOnSegment(Vector v)
         {
             var relV = v - Start;
@@ -34,6 +33,8 @@ namespace Geometry2D
 
             return mx - my < double.Epsilon && mx + double.Epsilon >= 0 && mx - double.Epsilon <= 1;
         }
+
+        public Vector Center => (End - Start)/2;
 
         public static explicit operator Line(Segment s) => new Line(s.Start,s.End - s.Start);
 

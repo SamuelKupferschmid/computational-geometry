@@ -26,7 +26,16 @@ namespace Geometry2D
             if (IsParallel(l))
                 return false;
 
-            return false;
+            var x1 = Direction.X - Support.X;
+            var y1 = Direction.Y - Support.Y;
+
+            var x2 = l.Direction.X - l.Support.X;
+            var y2 = l.Direction.Y - l.Support.Y;
+
+            var x = ((l.Support.Y - Support.Y)*x1*x2 + y1*x2*Support.X - y2*x1*l.Support.X)/(y1*x2 - y2*x1);
+            var y = Support.Y + (y1/x1)*(x - Support.X);
+            v = new Vector(x,y);
+            return true;
         }
 
         public bool IsOnLine(Vector v)
