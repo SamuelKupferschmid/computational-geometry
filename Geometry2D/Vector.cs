@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Geometry2D
 {
-    public struct Vector: IGeometricElement
+    public struct Vector : IGeometricElement
     {
         public readonly double X;
         public readonly double Y;
@@ -17,9 +17,11 @@ namespace Geometry2D
             Y = y;
         }
 
-        public static Vector Null = new Vector(0,0);
+        public static Vector Null = new Vector(0, 0);
 
-        public double Length => Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y,2));
+        public double Length => Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2));
+
+        public double LengthSquared => Math.Pow(X, 2) + Math.Pow(Y, 2);
 
         /// <summary>
         /// Gets the manhattan distance relative to the 0-Point
@@ -27,7 +29,7 @@ namespace Geometry2D
         /// <returns></returns>
         public double MhnDist => Math.Abs(X) + Math.Abs(Y);
 
-        public bool IsMultiple(Vector v) => v == this || (X/v.X) - (Y/v.Y) < double.Epsilon;
+        public bool IsMultiple(Vector v) => v == this || (X / v.X) - (Y / v.Y) < double.Epsilon;
 
         public static Vector operator +(Vector v1, Vector v2) => new Vector(v1.X + v2.X, v1.Y + v2.Y);
 
@@ -58,5 +60,7 @@ namespace Geometry2D
                 return (X.GetHashCode() * 397) ^ Y.GetHashCode();
             }
         }
+
+        public double Cross(Vector v) => X * v.Y - v.X * Y;
     }
 }

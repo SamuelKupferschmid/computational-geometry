@@ -77,16 +77,14 @@ namespace Visualization2D
             var f = cRatio > dRation ? height / ViewSize.Y : width / ViewSize.X;
             var size = (ViewSize.End - ViewSize.Start) * f;
             var offset = (new Vector(width,height) - size) / 2;
-
-            g.FillRegion(Brushes.WhiteSmoke, g.Clip);
+            g.FillRectangle(Brushes.DeepSkyBlue,g.VisibleClipBounds);
+            g.FillRectangle(Brushes.CornflowerBlue, new Rectangle((int)offset.X,(int)offset.Y,(int)size.X,(int)size.Y));
             foreach (var el in this)
             {
                 if (el is Vector)
                     DrawVector(g, (Vector)el, offset, f);
                 else if (el is Segment)
                     DrawSegment(g, (Segment)el, offset, f);
-                else
-                    throw new NotImplementedException();
             }
         }
 
@@ -99,10 +97,10 @@ namespace Visualization2D
         private void DrawSegment(Graphics g, Segment s, Vector offset, double factor)
         {
             s = new Segment(calcImageVector(s.Start, offset, factor), calcImageVector(s.End, offset, factor));
-            g.DrawLine(Pens.Black, (float)s.X1, g.VisibleClipBounds.Height - (float)s.Y1, (float)s.X2, g.VisibleClipBounds.Height - (float)s.Y2);
+            g.DrawLine(Pens.DarkGreen, (float)s.X1, g.VisibleClipBounds.Height - (float)s.Y1, (float)s.X2, g.VisibleClipBounds.Height - (float)s.Y2);
         }
 
-        private Vector calcImageVector(Vector v, Vector offset, double factor) => (v - offset) * factor;
+        private Vector calcImageVector(Vector v, Vector offset, double factor) => v * factor + offset;
 
         private void CalcView()
         {

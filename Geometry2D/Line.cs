@@ -19,6 +19,16 @@ namespace Geometry2D
 
         public bool IsParallel(Line line) => Direction.IsMultiple(line.Direction);
 
+        public bool Intersects(Line l, out Vector v)
+        {
+            v = default(Vector);
+
+            if (IsParallel(l))
+                return false;
+
+            return false;
+        }
+
         public static bool operator ==(Line l1, Line l2)
         {
             if (!l1.Direction.IsMultiple(l2.Direction))

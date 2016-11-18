@@ -20,5 +20,8 @@ namespace Geometry2DTests
 
         [TestMethod]
         public void MultipleNullIsTrue() => Assert.IsTrue(new Vector(0, 0).IsMultiple(new Vector(0, 0)));
+
+        [TestMethod]
+        public void CrossParallelIsZero() => Assert.AreEqual(0, new Vector(4, 5).Cross(new Vector(8, 10)), double.Epsilon);
     }
 }

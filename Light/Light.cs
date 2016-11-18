@@ -36,6 +36,10 @@ namespace Light
                         drawing.Add(s + move);
                     }
                 }
+
+                drawing.Add(new Vector(3,5));
+                drawing.Add(new Line(Vector.Null, new Vector(3,2)));
+                drawing.Add(new Ray(new Vector(1,1),new Vector(-0.1,4)));
                 //outp.Write("solution");
 
 
