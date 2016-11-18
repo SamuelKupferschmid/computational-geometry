@@ -66,31 +66,28 @@ namespace Visualization2D
         /// <param name="width"></param>
         /// <param name="height"></param>
         /// <returns></returns>
-        public Image DrawImage(double width, double height)
+        public void DrawGraphics(Graphics g)
         {
+            double width = g.VisibleClipBounds.Width;
+            double height = g.VisibleClipBounds.Height;
+
             var cRatio = width / height;
             var dRation = ViewSize.X / ViewSize.Y;
 
-            var f = cRatio > dRation ? height/ViewSize.Y : width/ViewSize.X;
+            var f = cRatio > dRation ? height / ViewSize.Y : width / ViewSize.X;
             var size = (ViewSize.End - ViewSize.Start) * f;
+            var offset = (new Vector(width,height) - size) / 2;
 
-            var img = new Bitmap((int)size.X, (int)size.Y);
-
-            using (var g = Graphics.FromImage(img))
+            g.FillRegion(Brushes.WhiteSmoke, g.Clip);
+            foreach (var el in this)
             {
-                g.FillRegion(Brushes.WhiteSmoke,g.Clip);
-                foreach (var el in this)
-                {
-                    if (el is Vector)
-                        DrawVector(g, (Vector)el, Vector.Null, 50);
-                    else if (el is Segment)
-                        DrawSegment(g, (Segment)el, Vector.Null, 50);
-                    else
-                        throw new NotImplementedException();
-                }
+                if (el is Vector)
+                    DrawVector(g, (Vector)el, offset, f);
+                else if (el is Segment)
+                    DrawSegment(g, (Segment)el, offset, f);
+                else
+                    throw new NotImplementedException();
             }
-
-            return img;
         }
 
         private void DrawVector(Graphics g, Vector v, Vector offset, double factor)

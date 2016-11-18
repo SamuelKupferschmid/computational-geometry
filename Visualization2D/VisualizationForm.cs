@@ -21,19 +21,12 @@ namespace Visualization2D
 
         protected override void OnLoad(EventArgs e)
         {
-            DrawCanvas();
             base.OnLoad(e);
         }
 
-        protected void DrawCanvas()
+        private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-            if (Drawing != null)
-                pictureBox1.Image = Drawing.DrawImage(pictureBox1.Width, pictureBox1.Height);
-        }
-
-        private void pictureBox1_Resize(object sender, EventArgs e)
-        {
-            DrawCanvas();
+            Drawing?.DrawGraphics(e.Graphics);
         }
     }
 }
